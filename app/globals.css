@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon: #22e6ff;
+  --neon-soft: #7ff3ff;
+  --fault: #ff4d6d;
+  --grid: rgba(34, 230, 255, 0.075);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #04070c;
+  color: #d7e6f2;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(34, 230, 255, 0.28);
+  color: #eafcff;
+}
+
+/* ---------- scrollbars ---------- */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #070c14;
+}
+::-webkit-scrollbar-thumb {
+  background: #1d2f43;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2b4460;
+}
+
+@layer components {
+  .surface {
+    @apply rounded-2xl border border-white/[0.07] bg-[#0a121c]/85 backdrop-blur-xl;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.045),
+      0 24px 60px -32px rgba(0, 0, 0, 0.9);
+  }
+
+  .surface-inset {
+    @apply rounded-xl border border-white/5 bg-[#060b12];
+    box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.8);
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-neon/25 bg-neon/[0.07] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-neon-soft;
+  }
+
+  .panel-title {
+    @apply flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-neon-soft/70;
+  }
+
+  .label {
+    @apply text-[11px] font-medium uppercase tracking-[0.16em] text-slate-400/85;
+  }
+
+  .value {
+    @apply font-mono tabular-nums text-neon;
+  }
+
+  .btn-ghost {
+    @apply rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs font-medium text-slate-300 transition hover:border-neon/40 hover:bg-neon/[0.08] hover:text-neon-soft active:scale-[0.98];
+  }
+
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-xl px-8 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-[#02141a] transition;
+    background: linear-gradient(100deg, #22e6ff, #6ef7d0 55%, #22e6ff);
+    box-shadow:
+      0 0 0 1px rgba(34, 230, 255, 0.55),
+      0 18px 44px -18px rgba(34, 230, 255, 0.75);
+  }
+  .btn-primary:hover {
+    box-shadow:
+      0 0 0 1px rgba(34, 230, 255, 0.8),
+      0 22px 60px -16px rgba(34, 230, 255, 0.95);
+    transform: translateY(-1px);
+  }
+
+  .seg {
+    @apply rounded-lg px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400 transition;
+  }
+  .seg-on {
+    @apply bg-neon/[0.14] text-neon-soft shadow-glow;
+  }
+}
+
+/* ---------- blueprint backdrop ---------- */
+.blueprint {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 30%, transparent 78%);
+}
+
+.halo {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+/* ---------- range sliders ---------- */
+input[type="range"].rail {
+  @apply h-1.5 w-full cursor-pointer appearance-none rounded-full outline-none;
+  background: linear-gradient(
+    90deg,
+    var(--neon) 0%,
+    var(--neon) var(--fill, 50%),
+    #16283a var(--fill, 50%),
+    #16283a 100%
+  );
+}
+input[type="range"].rail::-webkit-slider-thumb {
+  @apply h-4 w-4 appearance-none rounded-full;
+  height: 1.05rem;
+  width: 1.05rem;
+  background: #eafcff;
+  border: 2px solid #22e6ff;
+  box-shadow:
+    0 0 0 4px rgba(34, 230, 255, 0.12),
+    0 0 16px rgba(34, 230, 255, 0.85);
+  transition: box-shadow 0.15s ease;
+}
+input[type="range"].rail::-webkit-slider-thumb:hover {
+  box-shadow:
+    0 0 0 6px rgba(34, 230, 255, 0.18),
+    0 0 22px rgba(34, 230, 255, 1);
+}
+input[type="range"].rail::-moz-range-thumb {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 99px;
+  background: #eafcff;
+  border: 2px solid #22e6ff;
+  box-shadow: 0 0 16px rgba(34, 230, 255, 0.85);
+}
+input[type="range"].rail.rail-fault {
+  --neon: #ff4d6d;
+}
+
+/* ---------- number field ---------- */
+.numfield {
+  @apply w-full rounded-lg border border-white/10 bg-[#060b12] px-3 py-2 font-mono text-sm text-neon-soft outline-none transition;
+}
+.numfield:focus {
+  border-color: rgba(34, 230, 255, 0.55);
+  box-shadow: 0 0 0 3px rgba(34, 230, 255, 0.1);
+}
+
+.text-glow {
+  text-shadow:
+    0 0 12px rgba(34, 230, 255, 0.55),
+    0 0 34px rgba(34, 230, 255, 0.25);
+}
+
+.canvas-host {
+  touch-action: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift,
+  .animate-sweep,
+  .animate-flicker {
+    animation: none !important;
+  }
+}
